@@ -12,6 +12,8 @@ export function getFeedback(
   const pctOff = Math.abs(guess - answer) / answer;
   const direction = guess < answer ? "higher" : ("lower" as const);
 
+  const dirWord = direction === "higher" ? "higher" : "lower";
+
   if (pctOff <= 0.02)
     return {
       level: "exact",
@@ -25,7 +27,7 @@ export function getFeedback(
       level: "hot",
       emoji: "🔥",
       color: "#EF4444",
-      label: "Very hot!",
+      label: "Almost!",
       direction,
     };
   if (pctOff <= warmRange)
@@ -33,14 +35,22 @@ export function getFeedback(
       level: "warm",
       emoji: "🌡️",
       color: "#F59E0B",
-      label: "Warm",
+      label: `A bit ${dirWord}`,
+      direction,
+    };
+  if (pctOff <= 0.5)
+    return {
+      level: "cold",
+      emoji: "❄️",
+      color: "#3B82F6",
+      label: dirWord.charAt(0).toUpperCase() + dirWord.slice(1),
       direction,
     };
   return {
     level: "cold",
     emoji: "❄️",
     color: "#3B82F6",
-    label: "Cold",
+    label: `Way ${dirWord}`,
     direction,
   };
 }

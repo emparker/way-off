@@ -58,7 +58,13 @@ export default function GuessRow({ guess }: GuessRowProps) {
             {feedback.label}
             {feedback.direction && (
               <span className="text-sm">
-                {feedback.direction === "higher" ? "⬆️" : "⬇️"}
+                {pctOff > 0.5
+                  ? feedback.direction === "higher"
+                    ? "⬆️⬆️"
+                    : "⬇️⬇️"
+                  : feedback.direction === "higher"
+                    ? "⬆️"
+                    : "⬇️"}
               </span>
             )}
           </span>

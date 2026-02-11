@@ -108,7 +108,7 @@ export default function GameBoard({ question }: GameBoardProps) {
       />
 
       <div className="mt-8">
-        <GuessHistory guesses={guesses} />
+        <GuessHistory guesses={guesses} gameOver={gameOver} />
       </div>
 
       <div className="mb-3">
