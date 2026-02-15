@@ -3,6 +3,11 @@ import { Feedback } from "@/types";
 export const MAX_GUESSES = 5;
 export const GUESS_TIMER_MS = 10000;
 
+/** First guess gets 20s to digest the question; subsequent guesses get 10s. */
+export function getTimerMs(guessIndex: number): number {
+  return guessIndex === 0 ? 20000 : 10000;
+}
+
 export function getFeedback(
   guess: number,
   answer: number,

@@ -71,14 +71,18 @@ export default function GuessRow({ guess }: GuessRowProps) {
           >
             {feedback.label}
             {feedback.direction && (
-              <span className="text-sm" role="img" aria-label={`Go ${feedback.direction}`}>
-                {pctOff > 0.5
+              <span className="text-2xl animate-slamIn inline-block" role="img" aria-label={`Go ${feedback.direction}`}>
+                {pctOff > 1.0
                   ? feedback.direction === "higher"
-                    ? "⬆️⬆️"
-                    : "⬇️⬇️"
-                  : feedback.direction === "higher"
-                    ? "⬆️"
-                    : "⬇️"}
+                    ? "⬆️⬆️⬆️"
+                    : "⬇️⬇️⬇️"
+                  : pctOff > 0.5
+                    ? feedback.direction === "higher"
+                      ? "⬆️⬆️"
+                      : "⬇️⬇️"
+                    : feedback.direction === "higher"
+                      ? "⬆️"
+                      : "⬇️"}
               </span>
             )}
           </span>

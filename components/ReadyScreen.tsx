@@ -34,8 +34,33 @@ export default function ReadyScreen({
         {CATEGORY_LABELS[category] ?? category}
       </div>
 
-      <div className="text-text-secondary text-base mb-10 leading-relaxed">
-        You&apos;ll have <strong className="text-text-primary">10 seconds</strong> per guess
+      {/* How to play */}
+      <div className="text-left bg-bg-secondary rounded-xl border border-border px-5 py-4 mb-8 space-y-3.5">
+        <div className="text-sm text-text-secondary leading-relaxed">
+          <span className="text-text-primary font-medium">Guess the number.</span>{" "}
+          You get 5 tries. We&apos;ll tell you if you&apos;re hot, warm, or cold — and which direction to go.
+        </div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 text-xs text-text-dim">
+          <span className="flex items-center gap-1.5">
+            <span className="text-base">✅</span>
+            <span>Within 2%</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-base">🔥</span>
+            <span>Within 5%</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-base">🌡️</span>
+            <span>Within 20%</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-base">❄️</span>
+            <span>Beyond 20%</span>
+          </span>
+        </div>
+        <div className="text-xs text-text-dim">
+          20s for your first guess, then 10s each after.
+        </div>
       </div>
 
       <button

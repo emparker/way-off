@@ -95,7 +95,7 @@ export default function GuessInput({
         <button
           type="button"
           onClick={handleSubmit}
-          className="px-6 py-3.5 text-[15px] font-semibold text-white rounded-[10px] whitespace-nowrap transition-transform active:scale-95"
+          className={`px-6 py-3.5 text-[15px] font-semibold text-white rounded-[10px] whitespace-nowrap transition-transform active:scale-95 ${input.trim() ? "animate-pulseGlow" : ""}`}
           style={{
             background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
           }}

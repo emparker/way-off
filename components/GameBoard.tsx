@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Question } from "@/types";
-import { MAX_GUESSES, GUESS_TIMER_MS } from "@/lib/game-logic";
+import { MAX_GUESSES, getTimerMs } from "@/lib/game-logic";
 import { usePersistedGame } from "@/hooks/usePersistedGame";
 import QuestionDisplay from "./QuestionDisplay";
 import GuessHistory from "./GuessHistory";
@@ -114,7 +114,7 @@ export default function GameBoard({ question }: GameBoardProps) {
       <div className="mb-3">
         <GuessTimer
           running={timerRunning}
-          durationMs={GUESS_TIMER_MS}
+          durationMs={getTimerMs(guesses.length)}
           onTimeout={onTimeout}
         />
       </div>
