@@ -18,6 +18,7 @@ const config: Config = {
           DEFAULT: "#334155",
         },
         cold: "#3B82F6",
+        cool: "#38BDF8",
         warm: "#F59E0B",
         hot: "#EF4444",
         exact: "#10B981",

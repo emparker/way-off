@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Guess } from "@/types";
 import { generateShareText } from "@/lib/share";
 
@@ -21,14 +21,14 @@ export default function ShareButton({
 }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
-  const getShareText = () => {
+  const shareText = useMemo(() => {
     const url =
       typeof window !== "undefined" ? window.location.origin : "";
     return generateShareText(questionNumber, guesses, solved, answer, unit, url);
-  };
+  }, [questionNumber, guesses, solved, answer, unit]);
 
   const handleShare = async () => {
-    const text = getShareText();
+    const text = shareText;
 
     // Prefer native share sheet on mobile
     if (typeof navigator !== "undefined" && navigator.share) {
@@ -72,7 +72,7 @@ export default function ShareButton({
           Preview what&apos;s shared
         </summary>
         <div className="bg-bg-primary rounded-[10px] p-4 text-[13px] font-mono text-text-muted text-left leading-[1.8] whitespace-pre-line mt-1 border border-bg-secondary">
-          {getShareText()}
+          {shareText}
         </div>
       </details>
     </>

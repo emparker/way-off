@@ -15,10 +15,12 @@ export function getFeedback(guess: number, answer: number): Feedback {
 
   if (logDist <= 0.01)
     return { level: "exact", emoji: "✅", color: "#10B981", label: "Nailed it!", direction: null };
-  if (logDist <= 0.08)
+  if (logDist <= 0.05)
     return { level: "hot", emoji: "🔥", color: "#EF4444", label: "So close!", direction };
-  if (logDist <= 0.35)
+  if (logDist <= 0.15)
     return { level: "warm", emoji: "🌡️", color: "#F59E0B", label: `Guess a bit ${dirWord}`, direction };
+  if (logDist <= 0.5)
+    return { level: "cool", emoji: "🧊", color: "#38BDF8", label: `Guess ${dirWord}`, direction };
   if (logDist <= 1.0)
     return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess ${dirWord}`, direction };
   return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess WAY ${dirWord}!`, direction };

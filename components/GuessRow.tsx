@@ -81,7 +81,7 @@ export default function GuessRow({ guess }: GuessRowProps) {
                 aria-label={`Go ${feedback.direction}`}
               >
                 {Array.from({
-                  length: logDistance > 1.0 ? 3 : logDistance > 0.35 ? 2 : 1,
+                  length: logDistance > 1.0 ? 3 : logDistance > 0.5 ? 2 : 1,
                 }).map((_, i) => (
                   <span key={i} aria-hidden="true">{feedback.direction === "higher" ? "↑" : "↓"}</span>
                 ))}

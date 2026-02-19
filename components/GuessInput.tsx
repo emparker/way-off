@@ -31,6 +31,7 @@ export default function GuessInput({
   const [suffix, setSuffix] = useState<Suffix | null>(null);
   const [shaking, setShaking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const shakeRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     if (!disabled) {
@@ -38,6 +39,8 @@ export default function GuessInput({
       inputRef.current?.focus();
     }
   }, [disabled, focusTrigger]);
+
+  useEffect(() => () => { clearTimeout(shakeRef.current); }, []);
 
   // Combine typed input with selected suffix for parsing
   const resolvedInput = useMemo(() => {
@@ -58,7 +61,7 @@ export default function GuessInput({
     const num = parseInput(resolvedInput);
     if (num === null || num < 0 || isNaN(num)) {
       setShaking(true);
-      setTimeout(() => setShaking(false), 500);
+      shakeRef.current = setTimeout(() => setShaking(false), 500);
       return;
     }
     onGuess(num);
@@ -134,8 +137,8 @@ export default function GuessInput({
         ))}
       </div>
 
-      {/* Live preview of expanded value */}
-      {preview && suffix && (
+      {/* Live preview of expanded value — only when expansion differs from raw input */}
+      {preview && preview !== input.trim() && (
         <div className="text-center text-sm text-text-secondary mt-1.5 animate-fadeIn">
           = {preview}
         </div>
