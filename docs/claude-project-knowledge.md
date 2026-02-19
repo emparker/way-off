@@ -4,7 +4,7 @@
 
 A daily intuition game where players estimate real-world numeric values and get progressive hot/cold feedback. One question per day. Five guesses. Learn something mind-blowing every time.
 
-Target: Wordle-level virality through simple mechanic + daily scarcity + spoiler-free sharing.
+Target: viral growth through simple mechanic + daily scarcity + spoiler-free sharing.
 
 Tagline candidates:
 - "Your brain vs. reality"
@@ -169,6 +169,7 @@ export function parseInput(val: string): number | null {
 ### Number Formatter
 ```typescript
 export function formatNum(n: number): string {
+  if (Math.abs(n) >= 1e12) return (n / 1e12).toFixed(1).replace(/\.0$/, "") + "T";
   if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
   if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
   if (Math.abs(n) >= 1e4) return (n / 1e3).toFixed(1).replace(/\.0$/, "") + "K";
@@ -236,10 +237,11 @@ Returns today's question without the answer (answer sent separately after all gu
 ```
 
 ### Typography
-- Font: Inter (via next/font/google) with system fallbacks
-- Question: 22px, semibold
-- Guess numbers: 16px, semibold
-- Big reveal number: 52px, extra-bold, -1px letter-spacing
+- Font: Space Grotesk (via next/font/google) with system fallbacks
+- Question: 20px, semibold
+- Guess numbers: 16px, semibold, tabular-nums
+- Big reveal number: 52px, extra-bold, tracking-[-0.03em], tabular-nums, colored green on solve
+- Feedback labels: 14px, bold, imperative voice ("Guess higher", "Guess WAY lower!")
 - Labels/hints: 12-13px, uppercase tracking
 
 ### Animations
@@ -268,7 +270,7 @@ Returns today's question without the answer (answer sent separately after all gu
 1. No dominant daily estimation game exists
 2. Hot/cold + directional feedback (more engaging than binary comparison)
 3. Daily scarcity (one question, come back tomorrow)
-4. Spoiler-free emoji sharing (proven viral by Wordle)
+4. Spoiler-free emoji sharing (proven viral mechanic)
 5. AI-powered content pipeline (infinite questions)
 6. Zero-friction (no login, no download)
 

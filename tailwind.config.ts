@@ -33,7 +33,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
       },
       maxWidth: {
         game: "480px",
@@ -67,6 +67,11 @@ const config: Config = {
           "75%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1)" },
         },
+        clueIn: {
+          "0%": { transform: "scale(1.3)", opacity: "0" },
+          "60%": { transform: "scale(1.02)", opacity: "1" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.5s ease",
@@ -75,6 +80,7 @@ const config: Config = {
         shake: "shake 0.4s ease",
         pulseGlow: "pulseGlow 1.5s ease-in-out infinite",
         slamIn: "slamIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        clueIn: "clueIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },

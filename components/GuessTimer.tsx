@@ -65,18 +65,19 @@ export default function GuessTimer({
 
   return (
     <div
-      className="w-full h-1.5 bg-bg-primary rounded-full overflow-hidden"
+      className="w-full h-2.5 bg-bg-primary rounded-full overflow-hidden"
       role="timer"
       aria-label={running ? "Guess timer running" : "Guess timer stopped"}
     >
       <div
-        className="h-full rounded-full"
+        className="h-full rounded-full transition-shadow"
         style={{
           width: animating ? "0%" : "100%",
           background: barColor,
           transition: animating
-            ? `width ${durationMs}ms linear, background-color 300ms ease`
+            ? `width ${durationMs}ms linear, background-color 300ms ease, box-shadow 300ms ease`
             : "none",
+          boxShadow: barColor === COLOR_DANGER ? `0 0 12px 2px ${COLOR_DANGER}88` : "none",
         }}
       />
     </div>

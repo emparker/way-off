@@ -1,9 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Guess, Question } from "@/types";
 import { formatNum, MAX_GUESSES } from "@/lib/game-logic";
 import ShareButton from "./ShareButton";
+
+const LOSS_MESSAGES = [
+  "Way off! But there's always tomorrow.",
+  "Not today — but now you know!",
+  "Whoa, that's wild. Come back tomorrow!",
+  "Your gut lied to you. It happens.",
+  "Reality is stranger than fiction.",
+  "Brain vs. reality: reality wins this round.",
+  "So close yet so far. See you tomorrow!",
+  "Numbers are weird. Try again tomorrow.",
+];
 
 function Countdown() {
   const [timeLeft, setTimeLeft] = useState("");
@@ -30,7 +41,7 @@ function Countdown() {
 
   return (
     <div className="text-center text-sm text-text-muted mt-2 animate-fadeIn">
-      Next question in <span className="font-mono text-text-secondary">{timeLeft}</span>
+      Next question in <span className="font-mono text-text-secondary tabular-nums">{timeLeft}</span>
     </div>
   );
 }
@@ -47,6 +58,11 @@ export default function RevealScreen({
   solved,
 }: RevealScreenProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const lossMessage = useMemo(
+    () => LOSS_MESSAGES[question.questionNumber % LOSS_MESSAGES.length],
+    [question.questionNumber]
+  );
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -65,23 +81,26 @@ export default function RevealScreen({
       >
         {solved
           ? `Solved in ${guesses.length}/${MAX_GUESSES} guesses!`
-          : "Answer not found"}
+          : lossMessage}
       </div>
 
       {/* Question */}
       <h2
         ref={headingRef}
         tabIndex={-1}
-        className="text-lg font-medium text-[#94A3B8] mb-4 leading-[1.4] outline-none"
+        className="text-[20px] font-semibold text-text-secondary mb-5 leading-[1.4] outline-none"
       >
         {question.question}
       </h2>
 
       {/* The Big Answer */}
-      <div className="text-[52px] font-extrabold text-text-primary mb-1 animate-popIn tracking-tight">
+      <div
+        className="text-[52px] font-extrabold mb-1 animate-popIn tracking-[-0.03em] leading-none tabular-nums"
+        style={{ color: solved ? "#10B981" : "#F8FAFC" }}
+      >
         {formatNum(question.answer)}
       </div>
-      <div className="text-base text-text-muted mb-7 uppercase tracking-[2px]">
+      <div className="text-base text-text-secondary mb-7 uppercase tracking-[2px]">
         {question.unit}
       </div>
 

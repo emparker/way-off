@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-Daily estimation game — a Wordle-style viral web game where players guess real-world numeric values with hot/cold feedback. One question per day, five guesses, spoiler-free emoji sharing.
+Daily estimation game — a viral web game where players guess real-world numeric values with hot/cold feedback. One question per day, five guesses, spoiler-free emoji sharing.
 
 Name: **Way Off** (technical identifier: `way-off`)
 
@@ -49,9 +49,9 @@ types/
 - 10-second countdown timer per guess (anti-cheat + excitement)
 - "I'm Ready" gate before first guess — player controls when clock starts
 - Timeout burns a guess (shown as ⏰ in history and share text)
-- Feedback thresholds: ✅ Exact (≤2% off) · 🔥 Hot (≤5%) · 🌡️ Warm (≤20%) · ❄️ Cold (>20%)
-- Always show directional hint: ⬆️ Higher or ⬇️ Lower (except on exact)
-- Mobile magnitude buttons: Thousand, Million, Billion, Trillion (tap-to-toggle, numeric keypad stays up)
+- Feedback uses log-scale distance thresholds with imperative coaching labels: "Nailed it!", "So close!", "Guess a bit higher", "Guess higher", "Guess WAY higher!"
+- Directional hints use styled Unicode arrows (↑↓) in feedback colors, not emoji
+- Mobile magnitude buttons: Thousand, Million, Billion, Trillion (2x2 grid, tap-to-toggle, numeric keypad stays up)
 - Desktop shorthand still works: 5k=5000, 2m=2000000, 1.5b=1500000000
 - Answer range capped at trillions — no quintillion+ questions
 - Share output is spoiler-free emoji grid — this is the most important feature for virality
@@ -62,9 +62,11 @@ types/
 - Accent #6366F1 (buttons, focus) · Accent hover #8B5CF6
 - Text: primary #F8FAFC · secondary #CBD5E1 · muted #64748B
 - Borders: #334155
-- Font: Inter via next/font/google
+- Font: Space Grotesk via next/font/google
 - Max width 480px centered, mobile-first
-- Animations: fadeIn, fadeSlideIn, popIn (bounce scale), shake (invalid input)
+- Animations: fadeIn, fadeSlideIn, popIn (bounce scale), slamIn (arrows), clueIn (feedback text), shake (invalid input), pulseGlow (CTA buttons)
+- `tabular-nums` on all number displays (guess rows, reveal, countdown)
+- `prefers-reduced-motion` media query kills all animations globally
 
 ## Development Priorities
 1. Share output — design everything around making it effortless and compelling
@@ -90,7 +92,7 @@ This app will ship to the Apple App Store. 80%+ of traffic comes from phones via
 ## Decision Rules
 - Ship speed over perfection — this is an MVP
 - If a feature needs explanation, cut it
-- When in doubt, look at how Wordle handled it
+- When in doubt, keep it simple and familiar
 - Don't add auth, accounts, or login — cookies only
 - Don't add monetization — way too early
 - Every question must pass the "wait, WHAT?" test

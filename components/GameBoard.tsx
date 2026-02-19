@@ -107,9 +107,11 @@ export default function GameBoard({ question }: GameBoardProps) {
         guessesLeft={MAX_GUESSES - guesses.length}
       />
 
-      <div className="mt-8">
-        <GuessHistory guesses={guesses} gameOver={gameOver} />
-      </div>
+      {guesses.length > 0 && (
+        <div className="mt-8">
+          <GuessHistory guesses={guesses} gameOver={gameOver} />
+        </div>
+      )}
 
       <div className="mb-3">
         <GuessTimer
@@ -124,6 +126,7 @@ export default function GameBoard({ question }: GameBoardProps) {
         disabled={gameOver || !timerRunning}
         showHint={guesses.length === 0}
         focusTrigger={focusTrigger}
+        timerRunning={timerRunning}
       />
 
       {gameOver && screen === "play" && (

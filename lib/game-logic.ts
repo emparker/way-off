@@ -16,12 +16,12 @@ export function getFeedback(guess: number, answer: number): Feedback {
   if (logDist <= 0.01)
     return { level: "exact", emoji: "✅", color: "#10B981", label: "Nailed it!", direction: null };
   if (logDist <= 0.08)
-    return { level: "hot", emoji: "🔥", color: "#EF4444", label: "Almost!", direction };
+    return { level: "hot", emoji: "🔥", color: "#EF4444", label: "So close!", direction };
   if (logDist <= 0.35)
-    return { level: "warm", emoji: "🌡️", color: "#F59E0B", label: `A bit ${dirWord}`, direction };
+    return { level: "warm", emoji: "🌡️", color: "#F59E0B", label: `Guess a bit ${dirWord}`, direction };
   if (logDist <= 1.0)
-    return { level: "cold", emoji: "❄️", color: "#3B82F6", label: dirWord.charAt(0).toUpperCase() + dirWord.slice(1), direction };
-  return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Way ${dirWord}`, direction };
+    return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess ${dirWord}`, direction };
+  return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess WAY ${dirWord}!`, direction };
 }
 
 export function parseInput(val: string): number | null {
@@ -43,6 +43,8 @@ export function parseInput(val: string): number | null {
 }
 
 export function formatNum(n: number): string {
+  if (Math.abs(n) >= 1e12)
+    return (n / 1e12).toFixed(1).replace(/\.0$/, "") + "T";
   if (Math.abs(n) >= 1e9)
     return (n / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
   if (Math.abs(n) >= 1e6)

@@ -40,7 +40,7 @@ export default function ReadyScreen({
           <span className="text-text-primary font-medium">Guess the number.</span>{" "}
           You get 5 tries. We&apos;ll tell you if you&apos;re hot, warm, or cold — and which direction to go.
         </div>
-        <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 text-xs text-text-dim">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 text-xs text-text-secondary">
           <span className="flex items-center gap-1.5">
             <span className="text-base">✅</span>
             <span>Within 2%</span>
@@ -58,7 +58,7 @@ export default function ReadyScreen({
             <span>Beyond 20%</span>
           </span>
         </div>
-        <div className="text-xs text-text-dim">
+        <div className="text-xs text-text-secondary">
           20s for your first guess, then 10s each after.
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function ReadyScreen({
       <button
         type="button"
         onClick={onReady}
-        className="w-full py-4 text-lg font-semibold text-white rounded-xl transition-transform active:scale-95"
+        className="w-full py-4 text-lg font-semibold text-white rounded-xl transition-transform active:scale-95 animate-pulseGlow"
         style={{
           background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
         }}

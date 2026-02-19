@@ -10,6 +10,7 @@ interface GuessInputProps {
   disabled: boolean;
   showHint: boolean;
   focusTrigger?: number;
+  timerRunning?: boolean;
 }
 
 const SUFFIXES: { key: Suffix; label: string }[] = [
@@ -24,6 +25,7 @@ export default function GuessInput({
   disabled,
   showHint,
   focusTrigger = 0,
+  timerRunning = false,
 }: GuessInputProps) {
   const [input, setInput] = useState("");
   const [suffix, setSuffix] = useState<Suffix | null>(null);
@@ -99,7 +101,7 @@ export default function GuessInput({
         <button
           type="button"
           onClick={handleSubmit}
-          className={`px-6 py-3.5 text-[15px] font-semibold text-white rounded-[10px] whitespace-nowrap transition-transform active:scale-95 ${input.trim() ? "animate-pulseGlow" : ""}`}
+          className={`px-8 py-3.5 text-[15px] font-semibold text-white rounded-[10px] whitespace-nowrap transition-transform active:scale-95 ${timerRunning ? "animate-pulseGlow" : ""}`}
           style={{
             background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
           }}
@@ -109,13 +111,13 @@ export default function GuessInput({
       </div>
 
       {/* Magnitude suffix buttons */}
-      <div className="flex items-center gap-2.5 mt-2.5">
+      <div className="grid grid-cols-2 gap-2.5 mt-2.5">
         {SUFFIXES.map(({ key, label }) => (
           <button
             key={key}
             type="button"
             onClick={() => toggleSuffix(key)}
-            className={`px-4 py-2 min-h-[44px] text-sm font-semibold rounded-lg transition-all active:scale-95 ${
+            className={`py-2.5 min-h-[44px] text-sm font-semibold rounded-lg transition-all active:scale-95 ${
               suffix === key
                 ? "text-white shadow-md"
                 : "bg-bg-primary border border-border text-text-secondary hover:border-accent"

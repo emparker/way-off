@@ -16,27 +16,34 @@ Core game loop with cookie persistence, SSR, 10-second per-guess timer, ReadyScr
 
 ### What's Working
 - Full play → feedback → reveal → share flow
-- 10-second per-guess countdown timer with color transitions
-- "I'm Ready" gate screen before first guess
-- Timeout handling (⏰ in guess history, share text, emoji trail)
+- 10-second per-guess countdown timer with color transitions and danger-phase glow
+- "I'm Ready" gate screen with pulsing CTA
+- Timeout handling (⏰ in guess history with red tint + empty progress bar, share text, emoji trail)
 - Cookie persistence across page reloads (including timeout sentinel `-1`)
 - Server-side question rendering (`force-dynamic`)
 - Dev-mode `?date=` query param for testing any question
-- Feedback algorithm (exact/hot/warm/cold with directional hints)
+- Feedback algorithm (log-scale distance with imperative coaching labels)
 - Shorthand input parsing (5k, 2m, 1.5b) — desktop keyboard
-- Magnitude buttons (Thousand / Million / Billion / Trillion) — mobile-friendly, no keyboard switching
-- Spoiler-free emoji share text with avg response time
-- All animations (fadeIn, fadeSlideIn, popIn, shake)
-- "Come back tomorrow" countdown timer on reveal screen
+- Magnitude buttons (Thousand / Million / Billion / Trillion) — 2x2 grid, mobile-friendly, no keyboard switching
+- Spoiler-free emoji share text with avg response time (preview collapsed by default)
+- All animations (fadeIn, fadeSlideIn, popIn, slamIn, clueIn, shake, pulseGlow)
+- `prefers-reduced-motion` media query for accessibility
+- "Come back tomorrow" countdown timer on reveal screen (UTC-based)
 - Native share sheet (`navigator.share`) with clipboard fallback
 - Progress bar fill animation (animates from 0 on mount)
+- Styled Unicode directional arrows (↑↓) replacing emoji for cross-platform consistency
+- `tabular-nums` on all numeric displays (guess rows, reveal number, countdown)
+- Rotating loss messages for personality
+- Reveal number colored green on solve, tighter tracking at display size
 - Full accessibility: ARIA live regions, labels, focus management, semantic HTML
 - Safe area insets, viewport zoom prevention, mobile scroll-into-view
-- Build passes cleanly (5.8kB page + 87kB shared JS)
+- Font: Space Grotesk (distinctive numerals, geometric personality)
+- Build passes cleanly (~6.7kB page + 87kB shared JS)
 
 ### What's Broken or Missing
 - **Answer exposed in API response** — acceptable for MVP, documented tradeoff
 - **Gradient utilities not extracted** — low priority, deferred
+- **GuessTimer `onTimeout` callback in useEffect deps** — can theoretically reset timer mid-countdown if parent re-renders with new callback reference. Low probability but should be refactored to use a ref pattern.
 
 ---
 
@@ -83,7 +90,7 @@ These decisions were evaluated by architecture, frontend, and backend specialist
 
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
-| Timezone | **UTC everywhere** | Simpler, Wordle precedent. Server already uses UTC. All question dates are UTC. A user in Hawaii at 10pm sees "tomorrow's" question — this is acceptable and matches Wordle behavior. |
+| Timezone | **UTC everywhere** | Simpler and consistent. Server already uses UTC. All question dates are UTC. A user in Hawaii at 10pm sees "tomorrow's" question — this is acceptable and standard for daily games. |
 | Cookie vs localStorage | **Cookies only** | Per CLAUDE.md. Single JSON cookie (`way-off_state`), ~200 bytes. Store raw guess values, recompute feedback on hydration. |
 | Answer delivery | **Send answer with question** | MVP tradeoff. Client-side only. Determined cheaters will always find it. No prizes or leaderboard to protect. Harden in a later phase if needed. |
 | Mobile number input | **Magnitude buttons + decimal keypad** | `inputMode="decimal"` keeps the numeric keypad up on mobile. Tap-to-toggle Thousand/Million/Billion/Trillion buttons let players express big numbers without typing zeros or switching keyboards. Full words (not K/M/B) — user testing showed single letters were confused with units (kilometers, miles). Desktop shorthand (5k, 2m) still works via `parseInput`. |

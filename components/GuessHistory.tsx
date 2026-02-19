@@ -36,7 +36,7 @@ function RangeBounds({ guesses, gameOver }: GuessHistoryProps) {
 
   return (
     <div className="flex justify-center mt-1 mb-1 animate-fadeIn">
-      <span className="text-xs font-medium text-text-dim px-3 py-1 rounded-full border border-border bg-bg-secondary/50">
+      <span className="text-xs font-medium text-text-secondary px-3 py-1 rounded-full border-l-2 border-accent bg-bg-secondary/50">
         {text}
       </span>
     </div>

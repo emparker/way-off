@@ -64,12 +64,17 @@ export default function ShareButton({
             : "linear-gradient(135deg, #6366F1, #8B5CF6)",
         }}
       >
-        {copied ? "✓ Copied to clipboard!" : "📋 Share Result"}
+        {copied ? "Copied!" : "Share Result"}
       </button>
 
-      <div className="bg-bg-primary rounded-[10px] p-4 text-[13px] font-mono text-text-muted text-left leading-[1.8] whitespace-pre-line mb-6 border border-bg-secondary">
-        {getShareText()}
-      </div>
+      <details className="mb-6">
+        <summary className="text-xs text-text-dim text-center cursor-pointer py-2 select-none">
+          Preview what&apos;s shared
+        </summary>
+        <div className="bg-bg-primary rounded-[10px] p-4 text-[13px] font-mono text-text-muted text-left leading-[1.8] whitespace-pre-line mt-1 border border-bg-secondary">
+          {getShareText()}
+        </div>
+      </details>
     </>
   );
 }
