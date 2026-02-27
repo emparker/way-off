@@ -1,5 +1,14 @@
 import { Guess } from "@/types";
-import { formatNum } from "./game-logic";
+import { formatNum, getLogDistance } from "./game-logic";
+
+/** Pick a loss reaction emoji based on how close the best guess was. */
+function getLossEmoji(guesses: Guess[], answer: number): string {
+  const activeGuesses = guesses.filter((g) => !g.timedOut);
+  if (activeGuesses.length === 0) return "🫠";
+  const bestDist = Math.min(...activeGuesses.map((g) => getLogDistance(g.value, answer)));
+  if (bestDist <= 0.15) return "😢"; // close but didn't get it
+  return "🫠"; // way off
+}
 
 export function generateShareText(
   questionNum: number,
@@ -34,7 +43,13 @@ export function generateShareText(
   const firstReal = guesses.find((g) => !g.timedOut);
   if (firstReal) {
     const firstOff = Math.abs(firstReal.value - answer);
-    lines.push(`Off by ${formatNum(firstOff)} ${unit} at first 😅`);
+    // Exact win → 😅, close-enough win → 🎉, loss → contextual emoji
+    const lastGuess = guesses[guesses.length - 1];
+    const isCloseWin = solved && !lastGuess?.timedOut && lastGuess?.feedback?.level === "close";
+    const reactionEmoji = !solved
+      ? getLossEmoji(guesses, answer)
+      : isCloseWin ? "🎉" : "🏆";
+    lines.push(`Off by ${formatNum(firstOff)} ${unit} at first ${reactionEmoji}`);
   }
 
   lines.push(url);

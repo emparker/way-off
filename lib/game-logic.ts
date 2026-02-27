@@ -15,6 +15,8 @@ export function getFeedback(guess: number, answer: number): Feedback {
 
   if (logDist <= 0.01)
     return { level: "exact", emoji: "✅", color: "#10B981", label: "Nailed it!", direction: null };
+  if (logDist <= 0.03)
+    return { level: "close", emoji: "🎯", color: "#10B981", label: "Close enough!", direction: null };
   if (logDist <= 0.05)
     return { level: "hot", emoji: "🔥", color: "#EF4444", label: "So close!", direction };
   if (logDist <= 0.15)
@@ -24,6 +26,11 @@ export function getFeedback(guess: number, answer: number): Feedback {
   if (logDist <= 1.0)
     return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess ${dirWord}`, direction };
   return { level: "cold", emoji: "❄️", color: "#3B82F6", label: `Guess WAY ${dirWord}!`, direction };
+}
+
+/** Whether a feedback level counts as a win. */
+export function isWinningFeedback(level: Feedback["level"]): boolean {
+  return level === "exact" || level === "close";
 }
 
 export function parseInput(val: string): number | null {

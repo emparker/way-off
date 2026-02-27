@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { Guess, Question } from "@/types";
 import { formatNum, MAX_GUESSES } from "@/lib/game-logic";
 import ShareButton from "./ShareButton";
+import Confetti from "./Confetti";
 
 const LOSS_MESSAGES = [
   "Way off! But there's always tomorrow.",
@@ -64,12 +65,18 @@ export default function RevealScreen({
     [question.questionNumber]
   );
 
+  // Determine if the winning guess was dead-on exact
+  const lastGuess = guesses[guesses.length - 1];
+  const isExactWin = solved && !lastGuess?.timedOut && lastGuess?.feedback?.level === "exact";
+
   useEffect(() => {
     headingRef.current?.focus();
   }, []);
 
   return (
     <div className="pt-8 animate-fadeIn text-center">
+      {isExactWin && <Confetti />}
+
       {/* Result Badge */}
       <div
         className="inline-block px-4 py-1.5 rounded-full text-[13px] font-semibold mb-6"
@@ -79,6 +86,7 @@ export default function RevealScreen({
           border: `1px solid ${solved ? "#10B98144" : "#EF444444"}`,
         }}
       >
+        {isExactWin && <span className="mr-1">🏆</span>}
         {solved
           ? `Solved in ${guesses.length}/${MAX_GUESSES} guesses!`
           : lossMessage}

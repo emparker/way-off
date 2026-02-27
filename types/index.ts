@@ -10,7 +10,7 @@ export type Category =
 
 export type Difficulty = "easy" | "medium" | "hard";
 
-export type FeedbackLevel = "exact" | "hot" | "warm" | "cool" | "cold";
+export type FeedbackLevel = "exact" | "close" | "hot" | "warm" | "cool" | "cold";
 
 export type Direction = "higher" | "lower";
 

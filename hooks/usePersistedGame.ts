@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Question, Guess, ActiveGuess, TimedOutGuess, GameResult } from "@/types";
-import { getFeedback, getLogDistance, MAX_GUESSES, GUESS_TIMER_MS } from "@/lib/game-logic";
+import { getFeedback, getLogDistance, isWinningFeedback, MAX_GUESSES, GUESS_TIMER_MS } from "@/lib/game-logic";
 import {
   CookieGameState,
   getGameState,
@@ -152,21 +152,15 @@ export function usePersistedGame(question: Question) {
         let sl = prev.longestStreak;
         let gp = prev.gamesPlayed;
 
-        if (feedback.level === "exact") {
+        if (isWinningFeedback(feedback.level)) {
           newResult = "win";
           sk += 1;
           sl = Math.max(sl, sk);
           gp += 1;
-          setTimeout(() => {
-            setState((s) => ({ ...s, screen: "reveal" }));
-          }, 600);
         } else if (newGuesses.length >= MAX_GUESSES) {
           newResult = "loss";
           sk = 0;
           gp += 1;
-          setTimeout(() => {
-            setState((s) => ({ ...s, screen: "reveal" }));
-          }, 600);
         }
 
         writeCookie(newGuesses, newResult, sk, sl, gp);
@@ -206,9 +200,6 @@ export function usePersistedGame(question: Question) {
         newResult = "loss";
         sk = 0;
         gp += 1;
-        setTimeout(() => {
-          setState((s) => ({ ...s, screen: "reveal" }));
-        }, 600);
       }
 
       writeCookie(newGuesses, newResult, sk, sl, gp);

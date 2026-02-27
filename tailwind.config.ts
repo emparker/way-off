@@ -73,6 +73,17 @@ const config: Config = {
           "60%": { transform: "scale(1.02)", opacity: "1" },
           "100%": { transform: "scale(1)", opacity: "1" },
         },
+        confettiFall: {
+          "0%": {
+            transform: "translateY(-10px) translateX(0) rotate(0deg)",
+            opacity: "1",
+          },
+          "100%": {
+            transform:
+              "translateY(100dvh) translateX(var(--confetti-drift, 0px)) rotate(var(--confetti-spin, 360deg))",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.5s ease",
@@ -82,6 +93,7 @@ const config: Config = {
         pulseGlow: "pulseGlow 1.5s ease-in-out infinite",
         slamIn: "slamIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
         clueIn: "clueIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both",
+        confettiFall: "confettiFall 2s ease-in forwards",
       },
     },
   },

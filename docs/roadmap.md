@@ -44,6 +44,11 @@ Core game loop with cookie persistence, SSR, 10-second per-guess timer, ReadyScr
 - **Answer exposed in API response** — acceptable for MVP, documented tradeoff
 - **Gradient utilities not extracted** — low priority, deferred
 
+### Future Improvements (Low Priority)
+- **Timer bar screen reader announcement** — `role="timer"` has no live value; add `aria-live="assertive"` on a visually hidden element that announces the last few seconds during the danger phase
+- **Stable React keys for guess rows** — currently using array index (safe because append-only); switch to `g.timestamp` for resilience if rehydration logic ever changes
+- **ShareButton preview for raw shorthand** — preview now shows for `5k` etc. but could also show formatted output for large raw numbers (e.g., `1000000` → `= 1,000,000`)
+
 ---
 
 ## Launch Strategy
